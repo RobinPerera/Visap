@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { User_Auth } from "../../api/authAPI/Auth_API";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -18,35 +20,72 @@ function LoginPage() {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (validateForm()) {
       console.log("Form submitted:", { username, password });
-      // Add your login logic here.
+
+      try {
+        const user_details = await User_Auth(); // Await the promise
+
+        if (user_details.username === username) {
+          if (user_details.password === password) {
+            console.log("Login successful");
+            navigate("/home"); // Redirect to home
+          } else {
+            setError((prevError) => ({
+              ...prevError,
+              password: "Password is incorrect",
+            }));
+          }
+        } else {
+          console.error("Username is incorrect");
+          setError((prevError) => ({
+            ...prevError,
+            username: "username is incorrect",
+          }));
+        }
+      } catch (err) {
+        console.error("Error during login:", err.message);
+      }
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-r from-[#003366] via-[#004080] to-[#0073e6] text-white">
-      {/* Header Section */}
-      <header className="flex justify-between items-center px-6 py-4">
-        <div className="text-xl font-semibold flex items-center">
-          <div className="bg-white rounded-full h-12 w-12 flex justify-center items-center mr-3">
-            <span className="text-[#003366] text-lg font-extrabold">
-              VI-SAP
-            </span>
-          </div>
-          <span className="text-lg font-bold">VI-SAP</span>
-        </div>
-      </header>
-
+    <div className="min-h-[120vh] flex flex-col bg-gradient-to-r from-[#003366] via-[#004080] to-[#0073e6] text-white">
       {/* Main Content */}
-      <main className="flex-grow flex items-center justify-center px-4 sm:px-0">
-        <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-8 text-gray-800">
-          <h2 className="text-3xl font-semibold mb-6 text-center">Sign in</h2>
+      <main
+        className="flex-grow flex flex-col lg:flex-row items-center justify-between 
+            px-4 md:px-8 lg:px-24 
+            py-8 md:py-10 lg:py-16 
+            space-y-4 lg:space-y-0 lg:space-x-8"
+      >
+        {/* Logo and Text Section */}
+        <div
+          className="flex flex-col items-center lg:items-start text-center lg:text-left lg:w-1/2 mb-8 lg:mb-0 
+                pt-4 md:pt-6 lg:pt-8 
+                mt-4 md:mt-6 lg:mt-[-17rem]"
+        >
+          <div className="bg-white rounded-full h-16 w-16 flex justify-center items-center mb-4">
+            <span className="text-[#003366] text-xl font-extrabold">Vi</span>
+          </div>
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">Vi-Sap</h1>
+          <p className="text-sm md:text-lg">
+            Hello. Sign in and let the learning begin!
+          </p>
+        </div>
+
+        {/* Sign-in Box */}
+        <div className="bg-white rounded-lg shadow-lg w-full lg:w-[40%] p-6 md:p-8 text-gray-800">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-center">
+            Sign in
+          </h2>
           <form onSubmit={handleSubmit} noValidate>
             {/* Username Input */}
-            <div className="mb-6">
+            <div className="mb-4 md:mb-6">
               <label
                 htmlFor="username"
                 className="block text-sm font-medium text-gray-700 mb-1"
@@ -69,7 +108,7 @@ function LoginPage() {
             </div>
 
             {/* Password Input */}
-            <div className="mb-6">
+            <div className="mb-4 md:mb-6">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-1"
@@ -102,7 +141,7 @@ function LoginPage() {
             {/* Forgot Password Link */}
             <a
               href="/app"
-              className="text-sm text-[#0073e6] hover:underline mb-6 inline-block"
+              className="text-sm text-[#0073e6] hover:underline mb-4 inline-block"
             >
               Forgot your username or password?
             </a>
@@ -117,7 +156,7 @@ function LoginPage() {
           </form>
           <hr className="my-6" />
           <p className="text-center text-sm">
-            New to VI-SAP?{" "}
+            New to Pearson?{" "}
             <a
               href="/app"
               className="text-[#0073e6] font-medium hover:underline"
@@ -129,26 +168,23 @@ function LoginPage() {
       </main>
 
       {/* Footer Section */}
-      <footer className="bg-[#002244] text-sm py-4">
-        <div className="max-w-6xl mx-auto flex flex-wrap justify-between items-center px-6">
+      <footer className="bg-[#002244] text-white text-xs sm:text-sm py-4">
+        <div className="max-w-6xl mx-auto flex flex-wrap justify-between items-center px-4 sm:px-6">
           <div className="mb-2 sm:mb-0">
-            <a href="/terms" className="text-[#0073e6] hover:underline mr-4">
+            <a href="/terms" className="hover:underline mr-4">
               Terms of Use
             </a>
-            <a href="/privacy" className="text-[#0073e6] hover:underline mr-4">
+            <a href="/privacy" className="hover:underline mr-4">
               Privacy
             </a>
-            <a
-              href="/accessibility"
-              className="text-[#0073e6] hover:underline mr-4"
-            >
+            <a href="/accessibility" className="hover:underline mr-4">
               Accessibility
             </a>
-            <a href="/support" className="text-[#0073e6] hover:underline">
+            <a href="/support" className="hover:underline">
               Support
             </a>
           </div>
-          <div>Copyright © 2024 VI-SAP. All rights reserved.</div>
+          <div>Copyright © 2025 Pearson. All rights reserved.</div>
         </div>
       </footer>
     </div>
