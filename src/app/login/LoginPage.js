@@ -33,19 +33,17 @@ function LoginPage() {
 
         if (user_details.username === username) {
           if (user_details.password === password) {
-            console.log("Login successful");
             navigate("/home"); // Redirect to home
           } else {
             setError((prevError) => ({
               ...prevError,
-              password: "Password is incorrect",
+              password: "Username or Password is incorrect",
             }));
           }
         } else {
-          console.error("Username is incorrect");
           setError((prevError) => ({
             ...prevError,
-            username: "username is incorrect",
+            password: "Username or Password is incorrect",
           }));
         }
       } catch (err) {
@@ -55,7 +53,7 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-[120vh] flex flex-col bg-gradient-to-r from-[#003366] via-[#004080] to-[#0073e6] text-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-r from-[#003366] via-[#004080] to-[#0073e6] text-white">
       {/* Main Content */}
       <main
         className="flex-grow flex flex-col lg:flex-row items-center justify-between 
@@ -72,7 +70,7 @@ function LoginPage() {
           <div className="bg-white rounded-full h-16 w-16 flex justify-center items-center mb-4">
             <span className="text-[#003366] text-xl font-extrabold">Vi</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">Vi-Sap</h1>
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">Vi-SAP</h1>
           <p className="text-sm md:text-lg">
             Hello. Sign in and let the learning begin!
           </p>
@@ -97,9 +95,8 @@ function LoginPage() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm h-12 focus:ring-[#0073e6] focus:border-[#0073e6] text-gray-700 sm:text-lg px-4 ${
-                  error.username ? "border-red-500" : ""
-                }`}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm h-12 focus:ring-[#0073e6] focus:border-[#0073e6] text-gray-700 sm:text-lg px-4 ${error.username ? "border-red-500" : ""
+                  }`}
                 placeholder="Enter your username"
               />
               {error.username && (
@@ -121,9 +118,8 @@ function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm h-12 focus:ring-[#0073e6] focus:border-[#0073e6] text-gray-700 sm:text-lg px-4 ${
-                    error.password ? "border-red-500" : ""
-                  }`}
+                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm h-12 focus:ring-[#0073e6] focus:border-[#0073e6] text-gray-700 sm:text-lg px-4 ${error.password ? "border-red-500" : ""
+                    }`}
                   placeholder="Enter your password"
                 />
                 <span
