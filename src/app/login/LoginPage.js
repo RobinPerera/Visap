@@ -33,6 +33,7 @@ function LoginPage() {
 
         if (user_details.username === username) {
           if (user_details.password === password) {
+            console.log("Login successful");
             navigate("/home"); // Redirect to home
           } else {
             setError((prevError) => ({
