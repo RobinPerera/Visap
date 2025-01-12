@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User_Auth } from "../../api/authAPI/Auth_API";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -27,12 +26,13 @@ function LoginPage() {
 
     if (validateForm()) {
       console.log("Form submitted:", { username, password });
-
+      const name = "robin";
+      const pass = 1234;
       try {
-        const user_details = await User_Auth(); // Await the promise
+        //const user_details = await User_Auth(); // Await the promise
 
-        if (user_details.username === username) {
-          if (user_details.password === password) {
+        if (name === username) {
+          if (pass === parseInt(password)) {
             console.log("Login successful");
             navigate("/home"); // Redirect to home
           } else {
@@ -96,8 +96,9 @@ function LoginPage() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm h-12 focus:ring-[#0073e6] focus:border-[#0073e6] text-gray-700 sm:text-lg px-4 ${error.username ? "border-red-500" : ""
-                  }`}
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm h-12 focus:ring-[#0073e6] focus:border-[#0073e6] text-gray-700 sm:text-lg px-4 ${
+                  error.username ? "border-red-500" : ""
+                }`}
                 placeholder="Enter your username"
               />
               {error.username && (
@@ -119,8 +120,9 @@ function LoginPage() {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm h-12 focus:ring-[#0073e6] focus:border-[#0073e6] text-gray-700 sm:text-lg px-4 ${error.password ? "border-red-500" : ""
-                    }`}
+                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm h-12 focus:ring-[#0073e6] focus:border-[#0073e6] text-gray-700 sm:text-lg px-4 ${
+                    error.password ? "border-red-500" : ""
+                  }`}
                   placeholder="Enter your password"
                 />
                 <span
