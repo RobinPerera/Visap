@@ -7,10 +7,18 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+import { Auth_info } from "../../api/authAPI/Auth_API";
 
 const HomePage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const { username } = Auth_info();
+
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
 
   return (
     <div
@@ -73,7 +81,7 @@ const HomePage = () => {
                   href="#profile"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                 >
-                  Profile
+                  {username}
                 </a>
                 <a
                   href="#settings"
@@ -84,6 +92,10 @@ const HomePage = () => {
                 <a
                   href="#logout"
                   className="block px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center"
+                  onClick={() => {
+                    logout();
+                    setDropdownOpen(false);
+                  }}
                 >
                   <FaSignOutAlt className="mr-2" />
                   Log Out
@@ -94,31 +106,33 @@ const HomePage = () => {
         </div>
 
         {/* Mobile Navigation Menu */}
-        {menuOpen && (
-          <nav className="lg:hidden bg-blue-800 text-white text-lg">
-            <a href="#gallery" className="block px-6 py-2 hover:bg-blue-700">
-              Gallery
-            </a>
-            <a href="#myspace" className="block px-6 py-2 hover:bg-blue-700">
-              MySpace
-            </a>
-            <a
-              href="#collaboration"
-              className="block px-6 py-2 hover:bg-blue-700"
-            >
-              Collaboration
-            </a>
-            <a href="#group" className="block px-6 py-2 hover:bg-blue-700">
-              Group
-            </a>
-          </nav>
-        )}
-      </header>
+        {
+          menuOpen && (
+            <nav className="lg:hidden bg-blue-800 text-white text-lg">
+              <a href="#gallery" className="block px-6 py-2 hover:bg-blue-700">
+                Gallery
+              </a>
+              <a href="#myspace" className="block px-6 py-2 hover:bg-blue-700">
+                MySpace
+              </a>
+              <a
+                href="#collaboration"
+                className="block px-6 py-2 hover:bg-blue-700"
+              >
+                Collaboration
+              </a>
+              <a href="#group" className="block px-6 py-2 hover:bg-blue-700">
+                Group
+              </a>
+            </nav>
+          )
+        }
+      </header >
 
       {/* Main Section */}
-      <main className="flex flex-col lg:flex-row items-center justify-between px-8 lg:px-32 py-[10rem] text-center lg:text-left">
+      < main className="flex flex-col lg:flex-row items-center justify-between px-8 lg:px-32 py-[10rem] text-center lg:text-left" >
         {/* Left Content */}
-        <div className="lg:w-1/2 space-y-6">
+        < div className="lg:w-1/2 space-y-6" >
           <h1 className="text-4xl lg:text-6xl font-bold text-white">VI-Sap</h1>
           <p className="text-gray-300">
             Explicabo esse amet tempora quibusdam laudantium, laborum eaque
@@ -126,14 +140,14 @@ const HomePage = () => {
             suscipit fugiat molestias, veniam, vel architecto veritatis delectus
             repellat modi impedit sequi.
           </p>
-        </div>
+        </div >
 
         {/* Right Content */}
-        <div className="lg:w-1/2 mt-10 lg:mt-0">
+        < div className="lg:w-1/2 mt-10 lg:mt-0" >
           {/* Placeholder for illustration */}
-        </div>
-      </main>
-    </div>
+        </div >
+      </main >
+    </div >
   );
 };
 
